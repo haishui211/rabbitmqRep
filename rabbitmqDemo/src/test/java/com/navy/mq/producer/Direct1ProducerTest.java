@@ -24,5 +24,7 @@ public class Direct1ProducerTest {
 		msg.put("hello", "world");
 		
 		direct1Producer.send(msg);
+		
+		Thread.sleep(1000*60*60);
 	}
 }
