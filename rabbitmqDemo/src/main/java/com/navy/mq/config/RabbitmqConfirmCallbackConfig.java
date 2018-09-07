@@ -25,6 +25,11 @@ public class RabbitmqConfirmCallbackConfig implements ConfirmCallback, Initializ
 
 	@Override
 	public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+		
+		if(correlationData == null) {
+			return;
+		}
+		
 		if(ack) {
 			producerAckComponent.ackSuccessResolve(correlationData.getId());
 		}

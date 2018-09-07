@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.BindingBuilder.DirectExchangeRoutingKeyConfigurer;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OrderMqConfig {
 	
-	private final String orderTtlQueue = "order.ttl.queue";
+	private final String orderTtlQueue = "order.ttl";
 	
-	public static final String orderDelayQueue = "order.delay.queue";
+	public static final String orderDelayQueue = "order.delay";
 	
-	public static final String orderDelayRoute = "order.delay.route";
+	public static final String orderDelayRoute = "order.delay";
 	
 	public static final String orderFanoutExchange = "orderFanoutExchange";
 	
@@ -34,7 +32,7 @@ public class OrderMqConfig {
 	@Bean
 	public Queue orderTtlQueue() {
 		Map<String,Object> args = new HashMap<String, Object>();
-		args.put("x-message-ttl", 1);
+		args.put("x-message-ttl", 1000*10);
 		args.put("x-dead-letter-exchange" , orderDelayExchange);
 	    args.put("x-dead-letter-routing-key" , orderDelayRoute);
 		return new Queue(orderTtlQueue, true, false, false, args);
